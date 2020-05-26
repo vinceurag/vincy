@@ -1,0 +1,91 @@
+<div class="py-20" style="background: linear-gradient(90deg, #667eea 0%, #764ba2 100%)">
+  <div class="container mx-auto px-6">
+    <h2 class="text-4xl font-bold mb-2 text-white">
+      Call me Vincy. Your link shortener.
+    </h2>
+    <h3 class="text-2xl mb-8 text-gray-200">
+      As short as <u>vin.cy/hello</u>
+    </h3>
+  </div>
+</div>
+<%= if is_nil(@shortened_link) do %>
+<div class="container mx-auto py-6 flex mb-4">
+  <div class="w-1/3"></div>
+  <%= form_tag "#", [phx_change: :validate, phx_submit: :save, class: "w-1/3 bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"] %>
+  <!-- <form class=""> -->
+  <div class="mb-4">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+      Your Very Long Link
+    </label>
+    <input
+      class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+      id="longlink" type="text" name="long_link"
+      placeholder="https://pleaseShortenMe.org.ph.subdomain/?referrer=youknow&ishouldnotbehere=true"
+      value="<%= @long_link %>">
+  </div>
+  <div class="mb-6">
+    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+      Customize your short link here or leave it as is.
+    </label>
+    <span class="text-blue-500">vin.cy/</span> <input name="custom_path" id="linkvalue" type="text"
+      placeholder="<%= @hash %>" value="<%= @preferred_link %>">
+  </div>
+  <%= if not @valid_hash? do %>
+  <div class="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 pb-4" role="alert">
+    <p class="">Woops. This short link is already taken.</p>
+  </div>
+  <% end %>
+
+  <%= if not @valid_link? do %>
+  <div class="mb-6 bg-red-100 border-l-4 border-red-500 text-red-700 p-4 pb-4" role="alert">
+    <p class="">It looks like it's not a valid link. Be sure to include the protocol (http / https).</p>
+  </div>
+  <% end %>
+  <div class="flex items-center justify-center">
+    <button
+      class="bg-blue-500 text-white font-bold py-2 px-4 rounded <%= if @valid_hash? && @valid_link?, do: "focus:outline-none focus:shadow-outline hover:bg-blue-700", else: "opacity-50 cursor-not-allowed" %>"
+      type="submit" style="<%= if @valid_hash?, do: "background: linear-gradient(90deg, #667eea 0%, #764ba2 100%)" %>"
+      <%= if (!@valid_hash? || !@valid_link?), do: "disabled" %>>
+      Create Link
+    </button>
+  </div>
+  </form>
+</div>
+<% end %>
+<%= if @shortened_link do %>
+<div class="container mx-auto py-6 flex mb-4">
+  <div class="w-1/3"></div>
+  <div class="w-1/3" role="alert">
+    <div class="bg-blue-500 text-white font-bold rounded-t px-4 py-2">
+      Great!
+    </div>
+    <div class="border border-t-0 border-blue-400 rounded-b bg-white px-4 py-3 text-blue-700">
+      <p>Here's your shortened link</p>
+      <div class="flex items-center justify-center">
+        <a id="shLink" href="<%= @shortened_link %>"
+          class="text-blue-500 underline border-dotted border border-blue-600 p-1 mt-1"><%= @shortened_link %></a>
+      </div>
+      <div class="flex items-center justify-center">
+        <button onclick="copyLink()"
+          class="bg-transparent hover:bg-blue-500 text-blue-700 hover:text-white py-1 px-1 border border-blue-500 hover:border-transparent rounded mt-1">
+          Copy link</button>
+      </div>
+    </div>
+    <div class="flex items-center justify-center mt-1">
+      <p phx-click="new_link" class="text-blue-500 underline p-1 mt-1 cursor-pointer">
+        < Create a new link</p>
+    </div>
+  </div>
+</div>
+<% end %>
+
+<script>
+  function copyLink() {
+    var text = document.getElementById("shLink").text;
+    navigator.clipboard.writeText(text).then(function () {
+      console.log('Copied to clipboard: ' + text);
+    }, function (err) {
+      console.error('Could not copy text: ', err);
+    });
+  }
+</script>
