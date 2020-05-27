@@ -1,10 +1,10 @@
 APP="vincy" 
 
-BUILD_HOST="157.230.248.179"
+BUILD_HOST="vincy"
 BUILD_USER="deploy"
 BUILD_AT="/home/deploy/vincy/builds"
 
-PRODUCTION_HOSTS="157.230.248.179"
+PRODUCTION_HOSTS="vincy"
 PRODUCTION_USER="deploy"
 DELIVER_TO="/home/deploy/vincy"
 
