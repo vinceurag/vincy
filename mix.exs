@@ -49,7 +49,9 @@ defmodule Vincy.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:hashids, "~> 2.0"},
       {:timex, "~> 3.6"},
-      {:redix, "~> 0.10.7"}
+      {:redix, "~> 0.10.7"},
+      {:edeliver, ">= 1.6.0"},
+      {:distillery, "~> 2.1"}
     ]
   end
 
