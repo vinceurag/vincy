@@ -52,8 +52,8 @@ post_extract_release_archive() {
   __sync_remote "
     [ -f ~/.profile ] && source ~/.profile
     set -e
-    if [ -f /home/deploy/deploy_example/deploy_example/var/start_erl.data ]; then
-      rm /home/deploy/deploy_example/deploy_example/var/start_erl.data
+    if [ -f /home/deploy/vincy/vincy/var/start_erl.data ]; then
+      rm /home/deploy/vincy/vincy/var/start_erl.data
     fi
   "
 }
